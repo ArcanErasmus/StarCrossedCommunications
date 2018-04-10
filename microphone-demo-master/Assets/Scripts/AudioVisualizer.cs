@@ -11,6 +11,10 @@ public class AudioVisualizer : MonoBehaviour
     public FFTWindow fftWindow;
     public float lerpTime = 1;
     public Slider sensitivitySlider;
+    public Material pink, yellow;
+
+    private int highestBarHit = 0;
+    private float sensThreshold = 5.0f;
 
     /*
 	 * The intensity of the frequencies found between 0 and 44100 will be
@@ -38,8 +42,7 @@ public class AudioVisualizer : MonoBehaviour
 
         // populate array with fequency spectrum data
         GetComponent<AudioSource>().GetSpectrumData(spectrum, 0, fftWindow);
-
-
+        
         // loop over audioSpectrumObjects and modify according to fequency spectrum data
         // this loop matches the Array element to an object on a One-to-One basis.
         for (int i = 0; i < audioSpectrumObjects.Length; i++)
@@ -52,10 +55,21 @@ public class AudioVisualizer : MonoBehaviour
             float lerpY = Mathf.Lerp(audioSpectrumObjects[i].localScale.y, intensity, lerpTime);
             Vector3 newScale = new Vector3(audioSpectrumObjects[i].localScale.x, lerpY, audioSpectrumObjects[i].localScale.z);
 
-            // appply new scale to object
+            // apply new scale to object
             audioSpectrumObjects[i].localScale = newScale;
 
+            // reset color of the object
+            audioSpectrumObjects[highestBarHit].GetComponent<MeshRenderer>().material = pink;
+
+            // see if there is a new highest bar hit
+            if (intensity > sensThreshold && i > highestBarHit)
+            {
+                highestBarHit = i;
+            }
         }
+
+        // set the color of the highest bar hit to yellow
+        audioSpectrumObjects[highestBarHit].GetComponent<MeshRenderer>().material = yellow;
     }
 
     public void SensitivityValueChangedHandler(Slider sensitivitySlider)

@@ -9,15 +9,30 @@ public class OptionsController : MonoBehaviour
     public Slider sensitivitySlider, thresholdSlider;
     public GameObject settingsPanel;
     public GameObject openButton;
+    public GameObject music;
 
     private bool panelActive = false;
+    private bool playingMusic = false;
+    private AudioSource musicSource;
 
     // Use this for initialization
     void Start()
     {
+        SetDefaults();
+
         microphone.value = PlayerPrefsManager.GetMicrophone();
         sensitivitySlider.value = PlayerPrefsManager.GetSensitivity();
         thresholdSlider.value = PlayerPrefsManager.GetThreshold();
+
+        // show settings panel on start
+        panelActive = true;
+        settingsPanel.SetActive(true);
+
+        // not playing music on start
+        playingMusic = false;
+
+        // get music source reference
+        musicSource = music.GetComponent<AudioSource>();
     }
 
     public void SaveAndExit()
@@ -27,7 +42,8 @@ public class OptionsController : MonoBehaviour
         PlayerPrefsManager.SetThreshold(thresholdSlider.value);
 
         panelActive = !panelActive;
-        settingsPanel.GetComponent<Animator>().SetBool("PanelActive", panelActive);
+        //settingsPanel.GetComponent<Animator>().SetBool("PanelActive", panelActive);
+        settingsPanel.SetActive(false);
     }
 
     public void SetDefaults()
@@ -40,7 +56,8 @@ public class OptionsController : MonoBehaviour
     public void OpenSettings()
     {
         panelActive = !panelActive;
-        settingsPanel.GetComponent<Animator>().SetBool("PanelActive", panelActive);
+        //settingsPanel.GetComponent<Animator>().SetBool("PanelActive", panelActive);
+        settingsPanel.SetActive(true);
     }
 
     public void TogglePanel()
@@ -52,6 +69,20 @@ public class OptionsController : MonoBehaviour
         else
         {
             SaveAndExit();
+        }
+    }
+
+    public void PlayPauseMusic()
+    {
+        if (!playingMusic)
+        {
+            musicSource.Play();
+            playingMusic = !playingMusic;
+        }
+        else
+        {
+            musicSource.Stop();
+            playingMusic = !playingMusic;
         }
     }
 }

@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 3bdeb23fe599f054997026121bab9cd8
+timeCreated: 1523748853
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aristotelica Text Trial
+  fontNames:
+  - Aristotelica Text Trial
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 309aaf5359efa02439be9fc4246fdf33, type: 3}
+  - {fileID: 12800000, guid: 0bd7357441d5db542a892bf97190e63c, type: 3}
+  - {fileID: 12800000, guid: 327e1dba7479570438309fce66e9715f, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

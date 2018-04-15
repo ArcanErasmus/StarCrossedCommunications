@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: fb726ff3748d23249ba95f1b53a5ef11
+timeCreated: 1523748853
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aristotelica Icons
+  fontNames:
+  - Aristotelica Icons
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 48dd0425bca2b234cae9a79843eaa79d, type: 3}
+  - {fileID: 12800000, guid: f50b66969f3c0a54ab4579d66639ee7c, type: 3}
+  - {fileID: 12800000, guid: 4a1ce747dbe250345abf75388dfe423f, type: 3}
+  - {fileID: 12800000, guid: cfbef6a7aa1672748932b3807e161c3a, type: 3}
+  - {fileID: 12800000, guid: 85fe7d38bd651a74e8c5c11fbf3afb7e, type: 3}
+  - {fileID: 12800000, guid: 13135c5bc86be3f4094694da721a8e8e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

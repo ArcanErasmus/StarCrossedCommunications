@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 2e7d9a6f64592b1488e05b38a9d091fb
+timeCreated: 1523748853
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Aristotelica Small Caps
+  fontNames:
+  - Aristotelica Small Caps
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 298ba0ab81aa0934db69bf3af2ef4367, type: 3}
+  - {fileID: 12800000, guid: 25a61d2f4b225ff49a92637e05b04a00, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

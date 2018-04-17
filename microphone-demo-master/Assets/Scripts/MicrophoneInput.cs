@@ -19,10 +19,10 @@ public class MicrophoneInput : MonoBehaviour
 
     void Start()
     {
-        //get components you'll need
+        // Get components you'll need
         audioSource = GetComponent<AudioSource>();
 
-        // get all available microphones
+        // Get all available microphones
         foreach (string device in Microphone.devices)
         {
             if (microphone == null)
@@ -35,7 +35,7 @@ public class MicrophoneInput : MonoBehaviour
         microphone = options[PlayerPrefsManager.GetMicrophone()];
         minThreshold = PlayerPrefsManager.GetThreshold();
 
-        //add mics to dropdown
+        // Add mics to dropdown
         micDropdown.AddOptions(options);
         micDropdown.onValueChanged.AddListener(delegate
         {
@@ -47,35 +47,35 @@ public class MicrophoneInput : MonoBehaviour
             ThresholdValueChangedHandler(thresholdSlider);
         });
 
-        //initialize input with default mic
+        // Initialize input with default mic
         UpdateMicrophone();
     }
-
+    
     void UpdateMicrophone()
     {
-        // stop if currently recording
+        // Stop if currently recording
         audioSource.Stop();
 
-        // start recording mic to audioClip
+        // Start recording mic to audioClip
         audioSource.clip = Microphone.Start(microphone, true, 10, audioSampleRate);
         audioSource.loop = true;
 
-        Debug.Log(Microphone.IsRecording(microphone).ToString());// is mic recording?
+        Debug.Log(Microphone.IsRecording(microphone).ToString()); // Is mic recording?
 
-        // check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
+        // Check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
         if (Microphone.IsRecording(microphone))
         {
-            // wait until the recording has started
+            // Wait until the recording has started
             while (!(Microphone.GetPosition(microphone) > 0)) ;
 
             Debug.Log("recording started with " + microphone);
 
-            // play audio source
+            // Play audio source
             audioSource.Play();
         }
         else
         {
-            // mic doesn't work
+            // Mic doesn't work
             Debug.Log(microphone + " doesn't work!");
         }
     }

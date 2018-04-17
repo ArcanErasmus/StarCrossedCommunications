@@ -55,7 +55,7 @@ public class AudioVisualizer : MonoBehaviour
 		{
 			// apply height multiplier to intensity
 			float intensity = spectrum[i] * heightMultiplier;
-			Debug.Log (intensity);
+			//Debug.Log (intensity);
 
 			// calculate object's scale
 			float lerpY = Mathf.Lerp(audioSpectrumObjects[i].localScale.y, intensity, lerpTime);

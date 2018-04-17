@@ -45,19 +45,24 @@ public class Score : MonoBehaviour {
         // Compare the frequency to the note to play fundamental frequency value, taking possible rounding error in to account
         if (frequency >= (notes[noteToPlay] - roundingError) && frequency <= (notes[noteToPlay] + roundingError))
         {
+            // Generate a new random note to play
+            GenerateNewRandomNoteToPlay();
+
             // Update the player score and instruction text
             playerscore++;
             scoreText.text = "Score: " + playerscore;
-
-            // Generate a new random note to play
-            GenerateNewRandomNoteToPlay();
         }
 	}
 
     void GenerateNewRandomNoteToPlay()
     {
         // Generate a new random note to play
-        noteToPlay = notes.ElementAtOrDefault(Random.Range(0, notes.Count)).Key;
+        string nextNote = noteToPlay;
+        while (nextNote == noteToPlay)
+        {
+            nextNote = notes.ElementAtOrDefault(Random.Range(0, notes.Count)).Key;
+        }
+        noteToPlay = nextNote;
 
         // Update the instructions text
         instructionsText.text = "Play the note: " + noteToPlay;

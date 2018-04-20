@@ -89,6 +89,7 @@ public class MicrophoneInput : MonoBehaviour
     public void ThresholdValueChangedHandler(Slider thresholdSlider)
     {
         minThreshold = thresholdSlider.value;
+        Debug.Log("Threshold: " + thresholdSlider.value);
     }
 
     public float GetAveragedVolume()
@@ -112,7 +113,7 @@ public class MicrophoneInput : MonoBehaviour
         int i = 0;
         for (int j = 1; j < samples; j++)
         {
-            if (data[j] > minThreshold) // volumn must meet minimum threshold
+            if (data[j] > minThreshold) // volume must meet minimum threshold
             {
                 if (s < data[j])
                 {

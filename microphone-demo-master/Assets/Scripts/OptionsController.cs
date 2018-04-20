@@ -16,14 +16,15 @@ public class OptionsController : MonoBehaviour
     void Start()
     {
         SetDefaults();
+        SaveAndExit();
 
-        microphone.value = PlayerPrefsManager.GetMicrophone();
-        sensitivitySlider.value = PlayerPrefsManager.GetSensitivity();
-        thresholdSlider.value = PlayerPrefsManager.GetThreshold();
+        //microphone.value = PlayerPrefsManager.GetMicrophone();
+        //sensitivitySlider.value = PlayerPrefsManager.GetSensitivity();
+        //thresholdSlider.value = PlayerPrefsManager.GetThreshold();
 
-        // show settings panel on start
-        panelActive = true;
-        settingsPanel.SetActive(true);
+        //// show settings panel on start
+        //panelActive = true;
+        //settingsPanel.SetActive(true);
     }
 
     public void SaveAndExit()
@@ -40,7 +41,7 @@ public class OptionsController : MonoBehaviour
     {
         microphone.value = 0;
         sensitivitySlider.value = 100f;
-        thresholdSlider.value = 0.001f;
+        thresholdSlider.value = 0.0025f;
     }
 
     public void OpenSettings()

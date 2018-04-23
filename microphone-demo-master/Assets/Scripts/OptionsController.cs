@@ -41,7 +41,7 @@ public class OptionsController : MonoBehaviour
     {
         microphone.value = 0;
         sensitivitySlider.value = 100f;
-        thresholdSlider.value = 0.0025f;
+        thresholdSlider.value = 0.005f;
     }
 
     public void OpenSettings()

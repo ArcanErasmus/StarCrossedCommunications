@@ -13,6 +13,10 @@ public class Score : MonoBehaviour
     public Text freqText;
     public int playerscore = 0; // Player Score
     public float roundingError; // Margin Of Error when playing notes
+	public Text percentageText;
+	public int TotalScore = 50;
+	public float percentage = 0.0f;
+	public Image progress;
 
     private MicrophoneInput input; // Microphone Input Script that also contains fundamental frequency finding functionality
     private Dictionary<string, float> notes; // Dictionary contating notes and their corresponding fundamental frequency values
@@ -59,6 +63,9 @@ public class Score : MonoBehaviour
             // Update the player score and instruction text
             playerscore++;
             scoreText.text = "Score: " + playerscore;
+			percentage = ((float)playerscore / (float)TotalScore) * 100.0f;
+			progress.fillAmount = percentage/100.0f;
+			percentageText.text = Mathf.RoundToInt(percentage) + "%";
         }
     }
 

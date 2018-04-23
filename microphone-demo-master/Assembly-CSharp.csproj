@@ -55,7 +55,7 @@
      <Compile Include="Assets\Scripts\MicrophoneInput.cs" />
      <Compile Include="Assets\Scripts\OptionsController.cs" />
      <Compile Include="Assets\Scripts\PlayerPrefsManager.cs" />
-     <Compile Include="Assets\Scripts\Quit.cs" />
+     <Compile Include="Assets\Scripts\QuitBtn.cs" />
      <Compile Include="Assets\Scripts\Score.cs" />
      <Compile Include="Assets\Scripts\StartBtn.cs" />
  <Reference Include="UnityEngine.UI">

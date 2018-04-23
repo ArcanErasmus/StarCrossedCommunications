@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StartBtn : MonoBehaviour {
-	public void LoadByIndex(int sceneIndex){
+	public void LoadByIndex(int sceneIndex)
+    {
 		SceneManager.LoadScene (sceneIndex);
 	}
-
 }

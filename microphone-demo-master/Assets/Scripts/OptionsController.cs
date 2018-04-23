@@ -23,8 +23,8 @@ public class OptionsController : MonoBehaviour
         //thresholdSlider.value = PlayerPrefsManager.GetThreshold();
 
         //// show settings panel on start
-        //panelActive = true;
-        //settingsPanel.SetActive(true);
+        panelActive = false;
+        settingsPanel.SetActive(false);
     }
 
     public void SaveAndExit()

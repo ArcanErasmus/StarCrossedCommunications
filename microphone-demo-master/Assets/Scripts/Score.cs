@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
@@ -45,6 +46,9 @@ public class Score : MonoBehaviour
 
         // Set the rounding error
         roundingError = 50;
+
+        // Reset player score
+        playerscore = 0;
     }
 
     // Update is called once per frame
@@ -66,6 +70,12 @@ public class Score : MonoBehaviour
 			percentage = ((float)playerscore / (float)TotalScore) * 100.0f;
 			progress.fillAmount = percentage/100.0f;
 			percentageText.text = Mathf.RoundToInt(percentage) + "%";
+
+            // If the perecentage hits 100% progress to the win screen
+            if (percentage >= 100)
+            {
+                SceneManager.LoadScene(3); // Load win screen
+            }
         }
     }
 

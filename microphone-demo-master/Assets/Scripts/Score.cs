@@ -15,7 +15,7 @@ public class Score : MonoBehaviour
     public int playerscore = 0; // Player Score
     public float roundingError; // Margin Of Error when playing notes
 	public Text percentageText;
-	public int TotalScore = 50;
+	public int totalScore = 25;
 	public float percentage = 0.0f;
 	public Image progress;
 
@@ -49,6 +49,9 @@ public class Score : MonoBehaviour
 
         // Reset player score
         playerscore = 0;
+
+        // Set the total score to hit to progress to the next level
+        totalScore = 25;
     }
 
     // Update is called once per frame
@@ -67,7 +70,7 @@ public class Score : MonoBehaviour
             // Update the player score and instruction text
             playerscore++;
             scoreText.text = "Score: " + playerscore;
-			percentage = ((float)playerscore / (float)TotalScore) * 100.0f;
+			percentage = ((float)playerscore / (float)totalScore) * 100.0f;
 			progress.fillAmount = percentage/100.0f;
 			percentageText.text = Mathf.RoundToInt(percentage) + "%";
 

@@ -225,6 +225,8 @@
     <Compile Include="Assets\Scripts\PlayerPrefsManager.cs" />
     <Compile Include="Assets\Scripts\QuitBtn.cs" />
     <Compile Include="Assets\Scripts\Score.cs" />
+    <Compile Include="Assets\Scripts\Score2.cs" />
+    <Compile Include="Assets\Scripts\Score3.cs" />
     <Compile Include="Assets\Scripts\StartBtn.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

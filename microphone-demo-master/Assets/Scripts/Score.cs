@@ -77,7 +77,7 @@ public class Score : MonoBehaviour
             // If the perecentage hits 100% progress to the win screen
             if (percentage >= 100)
             {
-                SceneManager.LoadScene(3); // Load win screen
+                SceneManager.LoadScene(3); // Load next scene
             }
         }
     }

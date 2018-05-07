@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -12,12 +12,16 @@ public class Score : MonoBehaviour
     public Text instructionsText; // Instructions Text Object
     public Text scoreText; // Score Text Object
     public Text freqText;
+    public Text freqAssistText;
     public int playerscore = 0; // Player Score
     public float roundingError; // Margin Of Error when playing notes
 	public Text percentageText;
 	public int totalScore = 25;
 	public float percentage = 0.0f;
 	public Image progress;
+    public int sceneToLoad;
+    public const uint numFramesToBuffer = 15;
+    public const uint numFramesToMatch = 10;
 
     private MicrophoneInput input; // Microphone Input Script that also contains fundamental frequency finding functionality
     private Dictionary<string, float> notes; // Dictionary contating notes and their corresponding fundamental frequency values
@@ -25,6 +29,10 @@ public class Score : MonoBehaviour
 
     private List<float> noteFrequencyLogs = new List<float>(new float[] { 71.24374f, 74.18611f, 77.13511f, 78.61377f, 81.55579f, 84.50099f, 87.44839f, 88.91675f, 91.86607f, 94.80811f, 96.28093f, 99.22879f, 102.174f, 105.1214f, 106.5937f, 109.5391f, 112.4842f, 113.9569f, 116.9018f, 119.847f, 122.7923f, 124.2647f, 127.2103f, 130.1557f, 131.6284f, 134.5748f, 137.52f, 140.4653f, 141.9387f, 144.8833f, 147.8294f, 149.3021f, 152.2478f, 155.193f, 158.1383f, 159.6112f, 162.5568f, 165.5021f, 166.9751f, 169.9205f, 172.866f, 175.8116f, 177.2842f, 180.2298f, 183.1753f, 184.648f, 187.5935f, 190.539f, 193.4845f, 194.9572f, 197.9028f, 200.8483f, 202.3211f, 205.2665f, 208.212f, 211.1575f, 212.6303f, 215.5757f, 218.5213f, 219.994f, 222.9395f, 225.885f, 228.8305f });
     private string[] noteLetters = new string[] { "C", "D", "E", "F", "G", "A", "B" };
+    private string noNoteLetter = "_";
+
+    private string[] inputBuffer = new string[numFramesToBuffer]; // length is # frames input to store in buffer
+    private uint currentBufferIndex = 0;
 
     // Use this for initialization
     void Start()
@@ -57,12 +65,12 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Get the current fundamental frequency of the mic input
-        float frequency = input.GetFundamentalFrequency();
-
+        // Store the current fundamental frequency of the mic input in buffer
+        inputBuffer[currentBufferIndex] = ParseNote(input.GetFundamentalFrequency());
+    
         // Compare the frequency to the note to play fundamental frequency value, taking possible rounding error in to account
         //if (frequency >= (notes[noteToPlay] - roundingError) && frequency <= (notes[noteToPlay] + roundingError))
-        if (MatchNote(frequency) == noteToPlay)
+        if (MatchNote(noteToPlay))
         {
             // Generate a new random note to play
             GenerateNewRandomNoteToPlay();
@@ -77,9 +85,44 @@ public class Score : MonoBehaviour
             // If the perecentage hits 100% progress to the win screen
             if (percentage >= 100)
             {
-                SceneManager.LoadScene(3); // Load next scene
+                SceneManager.LoadScene(sceneToLoad); // Load next scene
             }
         }
+
+        currentBufferIndex = (currentBufferIndex + 1) % numFramesToBuffer;
+    }
+
+    // Tests if note is matched, smoothly
+    bool MatchNote(string noteToPlay)
+    {
+        string assistTextContents = "";
+        bool match = false;
+
+        // test that current note matches noteToPlay
+        if (inputBuffer[currentBufferIndex] == noteToPlay)
+        {
+            int numMatchingFrames = 0;
+            for (uint i = 0; i < numFramesToBuffer; i++)
+                if (inputBuffer[i] == noteToPlay)
+                    numMatchingFrames += 1;
+
+            // Test that numFramesToMatch in inputBuffer also match noteToPlay
+            if (numMatchingFrames >= numFramesToMatch)
+            {
+                match = true;
+
+                // clear buffer in case same note gets chosen, prevents instant scoring
+                inputBuffer = new string[numFramesToBuffer];
+            }
+            else
+            {
+                // if matches first but not second, tell user to "Hold that note!"
+                assistTextContents = "Hold that note!";
+            }
+        }
+
+        freqAssistText.text = assistTextContents;
+        return match;
     }
 
     void GenerateNewRandomNoteToPlay()
@@ -88,7 +131,7 @@ public class Score : MonoBehaviour
         string nextNote = noteToPlay;
         while (nextNote == noteToPlay)
         {
-            nextNote = notes.ElementAtOrDefault(Random.Range(0, notes.Count)).Key;
+            nextNote = notes.ElementAtOrDefault(UnityEngine.Random.Range(0, notes.Count)).Key;
         }
         noteToPlay = nextNote;
 
@@ -96,12 +139,12 @@ public class Score : MonoBehaviour
         instructionsText.text = "Play the note: " + noteToPlay;
     }
 
-    string MatchNote(float inputFreq)
+    string ParseNote(float inputFreq)
     {
         if (inputFreq == 0) // no input or not above threshold
         {
             freqText.text = "Current Note: Too quiet";
-            return "X";
+            return noNoteLetter;
         }
 
         float frequency = Mathf.Log(inputFreq, 1.04f);// 1.04f is very important, it is the base used to get the logs list
@@ -109,7 +152,7 @@ public class Score : MonoBehaviour
         // this gets us index of note in list, or if not found, negative of index where it would be inserted in list 
         int closest = noteFrequencyLogs.BinarySearch(frequency);
 
-        string closestNote = "X"; // X == out of range
+        string closestNote = noNoteLetter; // noNoteLetter == out of range
         if (frequency < 70f)
         {
             freqText.text = "Current Note: Too low";
